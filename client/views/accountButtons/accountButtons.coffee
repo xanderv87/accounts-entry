@@ -8,3 +8,15 @@ Template.entryAccountButtons.helpers
 
   wrapLinks: ->
     AccountsEntry.settings.wrapLinks
+
+  beforeSignIn: ->
+    AccountsEntry.settings.beforeSignIn
+
+  beforeSignUp: ->
+    AccountsEntry.settings.beforeSignUp
+
+  beforeSignOut: ->
+    AccountsEntry.settings.beforeSignOut
+
+  beforeSignedInAs: ->
+    AccountsEntry.settings.beforeSignedInAs

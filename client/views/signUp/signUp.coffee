@@ -46,7 +46,7 @@ Template.entrySignUp.events
 
     username =
       if t.find('input[name="username"]')
-        t.find('input[name="username"]').value
+        t.find('input[name="username"]').value.toLowerCase()
       else
         undefined
 
@@ -56,13 +56,19 @@ Template.entrySignUp.events
       else
         undefined
 
-    email = t.find('input[type="email"]').value
+    trimInput = (val)->
+      val.replace /^\s*|\s*$/g, ""
+
+    email =
+      if t.find('input[type="email"]')
+        trimInput t.find('input[type="email"]').value
+      else
+        undefined
+
     password = t.find('input[type="password"]').value
 
     fields = AccountsEntry.settings.passwordSignupFields
 
-    trimInput = (val)->
-      val.replace /^\s*|\s*$/g, ""
 
     passwordErrors = do (password)->
       errMsg = []
@@ -86,8 +92,6 @@ Template.entrySignUp.events
 
     if passwordErrors then return
 
-    email = trimInput email
-
     emailRequired = _.contains([
       'USERNAME_AND_EMAIL',
       'EMAIL_ONLY'], fields)
@@ -96,8 +100,8 @@ Template.entrySignUp.events
       'USERNAME_AND_EMAIL',
       'USERNAME_ONLY'], fields)
 
-    if usernameRequired && email.length is 0
-      Session.set('entryError', i18n("error.uernameRequired"))
+    if usernameRequired && username.length is 0
+      Session.set('entryError', i18n("error.usernameRequired"))
       return
 
     if emailRequired && email.length is 0
@@ -108,37 +112,32 @@ Template.entrySignUp.events
       Session.set('entryError', i18n("error.signupCodeRequired"))
       return
 
-    validateUser = ->
-      newUserData =
-        email: email
-        password: password
-        profile: AccountsEntry.settings.defaultProfile || {}
-      if username
-        newUserData.username = username
-      Accounts.createUser newUserData, (err, newUserData) ->
-        if err
-          Session.set('entryError', err.reason)
-          return
-        #login on client
-        if  _.contains([
-          'USERNAME_AND_EMAIL',
-          'EMAIL_ONLY'], AccountsEntry.settings.passwordSignupFields)
-          Meteor.loginWithPassword(email, password)
-        else
-          Meteor.loginWithPassword(username, password)
 
-        Router.go AccountsEntry.settings.dashboardRoute
-
-    if AccountsEntry.settings.showSignupCode
-      Meteor.call('entryValidateSignupCode', signupCode, (err, valid) ->
-        if err
-          console.log err
-        if valid
-          validateUser()
-        else
-          Session.set('entryError', i18n("error.signupCodeIncorrect"))
-          return
-      )
-    else
-      validateUser()
-
+    Meteor.call 'entryValidateSignupCode', signupCode, (err, valid) ->
+      if valid
+        newUserData =
+          username: username
+          email: email
+          password: password
+          profile: AccountsEntry.settings.defaultProfile || {}
+        Accounts.createUser newUserData, (err, data) ->
+          if err
+            T9NHelper.accountsError err
+            return
+          #login on client
+          isEmailSignUp = _.contains([
+            'USERNAME_AND_EMAIL',
+            'EMAIL_ONLY'], AccountsEntry.settings.passwordSignupFields)
+          userCredential = if isEmailSignUp then email else username
+          Meteor.loginWithPassword userCredential, password, (error) ->
+            if error
+              T9NHelper.accountsError error
+            else if Session.get 'fromWhere'
+              Router.go Session.get('fromWhere')
+              Session.set 'fromWhere', undefined
+            else
+              Router.go AccountsEntry.settings.dashboardRoute
+      else
+        console.log err
+        Session.set 'entryError', i18n("error.signupCodeIncorrect")
+        return

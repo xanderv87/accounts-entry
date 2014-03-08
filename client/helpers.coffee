@@ -2,7 +2,7 @@ if typeof Handlebars isnt "undefined"
   Handlebars.registerHelper "signedInAs", (date) ->
     if Meteor.user().username
       Meteor.user().username
-    else if Meteor.user().profile.name
+    else if Meteor.user().profile && Meteor.user().profile.name
       Meteor.user().profile.name
     else if Meteor.user().emails and Meteor.user().emails[0]
       Meteor.user().emails[0].address
@@ -28,3 +28,6 @@ Handlebars.registerHelper 'loginServices', ->
 
 Handlebars.registerHelper 'showSignupCode', ->
   AccountsEntry.settings.showSignupCode is true
+
+Handlebars.registerHelper 'passwordLoginService', ->
+  !!Package['accounts-password']

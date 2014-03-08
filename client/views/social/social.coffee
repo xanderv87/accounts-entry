@@ -1,13 +1,20 @@
+
 Template.entrySocial.helpers
+
   buttonText: ->
     Session.get('buttonText')
+
+  unconfigured: ->
+    Accounts.loginServiceConfiguration.find({service: @toString()}).fetch().length is 0
 
   google: ->
     if @[0] == 'g' && @[1] == 'o'
       true
 
 Template.entrySocial.events
+
   'click .btn': (event)->
+    event.preventDefault()
     serviceName = $(event.target).attr('id').split('-')[1]
     callback = (err) ->
       if (!err)
@@ -28,8 +35,6 @@ Template.entrySocial.events
       options.requestOfflineToken = Accounts.ui._options.requestOfflineToken[serviceName]
 
     loginWithService(options, callback)
-
-    Router.go AccountsEntry.settings.dashboardRoute
 
 capitalize = (str) ->
   str.charAt(0).toUpperCase() + str.slice(1)

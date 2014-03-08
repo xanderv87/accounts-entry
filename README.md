@@ -1,5 +1,7 @@
 # accounts-entry
 
+[![Build Status](https://travis-ci.org/BeDifferential/accounts-entry.png)](https://travis-ci.org/BeDifferential/accounts-entry)
+
 A meteorite package that relies on Iron Router and provides an
 alternative interface to accounts-ui, with whole pages for sign up
 and sign in. 
@@ -17,3 +19,7 @@ links):
 * Email team@differential.io to add your project to the list.
 
 See more in our [documentation](http://github.differential.io/accounts-entry/).
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/BeDifferential/accounts-entry/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+

@@ -22,16 +22,19 @@ en =
   privacyPolicy: "Privacy Policy"
   terms: "Terms of Use"
   sign: "Sign"
+  configure: "Configure"
   with: "with"
+  createAccount: "Create an Account"
+  and: "and"
 
   error:
     minChar: "7 character minimum password."
     pwOneLetter: "Password requires 1 letter."
     pwOneDigit: "Password must have at least one digit."
-    uernameRequired: "Username is required"
-    emailRequired: "Email is required"
-    signupCodeRequired: "Signup code is required"
-    signupCodeIncorrect: "Signup code is incorrect"
-    unknown: "Unknown error"
+    usernameRequired: "Username is required."
+    emailRequired: "Email is required."
+    signupCodeRequired: "Signup code is required."
+    signupCodeIncorrect: "Signup code is incorrect."
+    signInRequired: "You must be signed in to do that."
 
-i18n.map "en", en
+T9n.map "en", en

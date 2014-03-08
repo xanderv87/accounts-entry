@@ -23,16 +23,19 @@ es =
   privacyPolicy: "Póliza de Privacidad"
   terms: "Terminos de Uso"
   sign: "Ingresar"
+  configure: "Disposición"
   with: "con"
+  createAccount: "Crear cuenta"
+  and: "y"
 
   error:
     minChar: "7 carácteres minimo."
     pwOneLetter: "Minimo una letra."
     pwOneDigit: "Minimo un dígito."
-    uernameRequired: "Usuario es necesario"
-    emailRequired: "Email es necesario"
-    signupCodeRequired: "Codigo para suscribir es necesario"
-    signupCodeIncorrect: "Codigo para suscribir no coincide"
-    unknown: "Error desconocido"
+    usernameRequired: "Usuario es necesario."
+    emailRequired: "Email es necesario."
+    signupCodeRequired: "Código para suscribir es necesario."
+    signupCodeIncorrect: "Código para suscribir no coincide."
+    signInRequired: "Debes iniciar sesión para hacer eso."
 
-i18n.map "es", es
+T9n.map "es", es
