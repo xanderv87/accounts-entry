@@ -12,7 +12,6 @@ Package.on_use(function(api) {
     'underscore',
     'templating',
     'handlebars',
-    'spark',
     'session',
     'coffeescript',
     'less']
