@@ -21,6 +21,9 @@ Template.entrySignIn.helpers
   logo: ->
     AccountsEntry.settings.logo
 
+  signUpEnabled: ->
+    AccountsEntry.settings.entrySignUp
+
 Template.entrySignIn.events
   'submit #signIn': (event) ->
     event.preventDefault()

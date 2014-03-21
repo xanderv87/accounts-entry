@@ -15,14 +15,15 @@ Meteor.startup ->
       not AccountsEntry.settings.signupCode or signupCode is AccountsEntry.settings.signupCode
 
     accountsCreateUser: (username, email, password) ->
-      if username
-        Accounts.createUser
-          username: username,
-          email: email,
-          password: password,
-          profile: AccountsEntry.settings.defaultProfile || {}
-      else
-        Accounts.createUser
-          email: email
-          password: password
-          profile: AccountsEntry.settings.defaultProfile || {}
+      if AccountsEntry.settings.entrySignUp
+        if username
+          Accounts.createUser
+            username: username,
+            email: email,
+            password: password,
+            profile: AccountsEntry.settings.defaultProfile || {}
+        else
+          Accounts.createUser
+            email: email
+            password: password
+            profile: AccountsEntry.settings.defaultProfile || {}

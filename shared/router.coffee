@@ -9,8 +9,13 @@ Router.map ->
   @route "entrySignUp",
     path: "/sign-up"
     before: ->
-      Session.set('entryError', undefined)
-      Session.set('buttonText', 'up')
+      if AccountsEntry.settings.entrySignUp
+        Session.set('entryError', undefined)
+        Session.set('buttonText', 'up')
+      else
+        @render 'entrySignIn'
+        Router.go AccountsEntry.settings.homeRoute
+        @stop()
 
   @route "entryForgotPassword",
     path: "/forgot-password"
